@@ -1,6 +1,13 @@
 
+;;; list-transform.el --- Transform a bullet list to a sentence and vice versa.  -*- lexical-binding: t; -*-
+
+;; TODO see Conventional Headers
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Headers.html
+
+;;; Code:
+
 (defvar list-transform-and-word "and"
-  "The word before the last list item in a sentence. Set to `nil' to use a comma only.")
+  "The word before the last list item in a sentence.  Set to nil to use a comma only.")
 
 (defvar list-transform-oxford-comma t
   "Put a comma before `list-transform-and-word' in a sentence.")
@@ -37,19 +44,19 @@
   (save-excursion
     ;; goto begin of list
     (cond ((re-search-backward "^ *$" nil t)
-           (next-line)
+           (forward-line)
            (beginning-of-line))
-          (t (beginning-of-buffer)))
+          (t (goto-char (point-min))))
     (let ((startpoint (point)))
       ;; delete first bullet point
       (when (re-search-forward "^ *[*+-] " (point-at-eol) t)
         (replace-match "")
         ;; goto end of list
         (cond ((re-search-forward "^ *$" nil t)
-               (previous-line)
+               (forward-line -1)
                (end-of-line))
               (t
-               (end-of-buffer)))
+               (goto-char (point-max))))
         (while (re-search-backward "^ *[*+-] " startpoint t)
           (replace-match ", ")
           (join-line))
@@ -72,3 +79,6 @@
          (concat " " list-transform-and-word " "))
         (t ", ")))
 
+(provide 'list-transform)
+
+;;; list-transform.el ends here
