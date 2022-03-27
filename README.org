@@ -14,7 +14,7 @@ becomes
 
 : Apple, Banana, and Orange
 
-[[demo.gif][Demo]]
+[[./demo.gif]]
 
 You can call it =M-x list-transform= or bind it to a key.
 
