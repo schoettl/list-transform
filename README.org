@@ -1,0 +1,43 @@
+
+* list-transform for Emacs
+
+Transform a bullet list to a sentence and vice versa.
+It's a Emacs port of the Vim plugin [[https://github.com/schoettl/listtrans.vim][listtrans.vim]].
+
+E.g.
+
+: - Apple
+: - Banana
+: - Orange
+
+becomes
+
+: Apple, Banana, and Orange
+
+[[demo.gif][Demo]]
+
+You can call it =M-x list-transform= or bind it to a key.
+
+I use it with evil mode and bound it to =,l=:
+
+#+begin_src elisp
+  (evil-set-leader 'motion (kbd ","))
+  (evil-define-key 'motion 'global (kbd "<leader>l") 'list-transform)
+#+end_src
+
+** Customization
+
+Use =(setq varname value)= to customize list-transform's behavior:
+
+- =list-transform-and-word= :: The word before the last list item in
+  a sentence. Set to =nil= to use a comma only. Default is ="and"=.
+
+- =list-transform-oxford-comma= :: Put a comma before
+  =list-transform-and-word= in a sentence. Default is =t=.
+
+** Todo
+
+The original listtrans.vim works also with semicolons and other
+conjuction words like "and not", "plus", "or else", …
+
+This is not yet implemented.
